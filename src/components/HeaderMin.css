@@ -1,0 +1,17 @@
+.header-content-min {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0px 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

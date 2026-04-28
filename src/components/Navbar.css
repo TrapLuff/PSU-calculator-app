@@ -1,0 +1,24 @@
+.custom-navbar {
+  padding: 0;
+  margin: 0;
+  width: auto;              /* 🔥 важно */
+}
+
+/* Делаем ссылки в строку */
+.nav-inline {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+/* Ссылки */
+.nav-inline .nav-link {
+  color: white !important;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0;
+}
+
+.nav-inline .nav-link:hover {
+  color: #f08000 !important;
+}
