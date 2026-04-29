@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import type { Component } from "../modules/types";
 import { useParams } from "react-router-dom";
 import { fetchComponentById } from "../modules/componentsApi";
-import { HeaderMinComponent } from "../components/HeaderMin";
+import { HeaderMinComponent } from "../components/HeaderMin/HeaderMin";
 
 
 export const ComponentPage: React.FC = () => {
@@ -18,13 +18,18 @@ export const ComponentPage: React.FC = () => {
 
     if (!component) return <div>Загрузка...</div>;
 
-    const imageSrc = component.image 
-        ? `/${component.image}` 
-        : "/logo.png";
+    const imageSrc = component.image
+    ? component.image.startsWith("http")
+        ? component.image
+        : `${component.image}`
+    : "/logo.png";
 
-    const videoSrc = component.video 
-        ? `/${component.video}` 
-        : "/video.mp4";
+    const videoSrc = component.video
+    ? component.video.startsWith("http")
+        ? component.video
+        : `${component.video}`
+    : "/video.mp4";
+
     
     return (
         <div className="portrait-mode">

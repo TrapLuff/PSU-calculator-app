@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ROUTES, ROUTE_LABELS } from "../routes";
+import { ROUTES, ROUTE_LABELS } from "../../routes";
 import "./Navbar.css";
 
 export const NavbarComponent: React.FC = () => {

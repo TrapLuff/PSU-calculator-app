@@ -41,6 +41,12 @@ h3{
     padding: 0 30px;
 }
 
+.inputField {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
 .body-up {
     display: flex;
     align-items: center;        /* выравнивание по вертикали */

@@ -5,6 +5,7 @@ import { ComponentPage } from "./pages/ComponentPage";
 import { HomePage } from "./pages/HomePage";
 import './style.css'
 
+
 export const App: React.FC = () => (
     <Router>
         <div className="container mt-3">

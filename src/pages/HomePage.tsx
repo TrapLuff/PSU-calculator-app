@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../routes";
 import { Button } from "react-bootstrap";
-import { HeaderComponent } from "../components/Header";
+import { HeaderComponent } from "../components/Header/Header";
 
 export const HomePage: FC = () => {
   return (

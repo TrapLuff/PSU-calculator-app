@@ -7,4 +7,6 @@ export interface Component {
     tdp_typical: number;
     tdp_up: number;
     description: string;
+    embedding?: number[];
+    short_description: string;
 }

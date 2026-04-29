@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
-import type { Component } from "../modules/types";
+import type { Component } from "../../modules/types";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -8,9 +8,11 @@ interface Props {
 }
 
 export const ComponentCard: React.FC<Props> = ({ component }) => {
-    const imageSrc = component.image 
-        ? `/${component.image}` 
-        : '/logo.png';
+    const imageSrc = component.image
+    ? component.image.startsWith("http")
+        ? component.image
+        : `${component.image}`
+    : "/logo.png";
 
     return (
         <div className="component-item">

@@ -1,6 +1,6 @@
 import React from "react";
-import { NavbarComponent } from "./Navbar";
-import { BreadCrumbs } from "./Breadcrumbs";
+import { NavbarComponent } from "../Navbar/Navbar";
+import { BreadCrumbs } from "../BreadCrumbs/Breadcrumbs";
 import './HeaderMin.css'
 
 type HeaderProps = {
