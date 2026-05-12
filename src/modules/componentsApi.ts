@@ -81,7 +81,9 @@ export const fetchComponents = async (filters?: {
         if (filters?.search) params.append("search", filters.search);
         if (filters?.type) params.append("type", filters.type);
 
-        const res = await fetch(`${API_URL}?${params.toString()}`);
+        const res = await fetch(`${API_URL}?${params.toString()}`, {
+            cache: "no-store"
+        });
         console.log("STATUS:", res.status);
 
         if (!res.ok) throw new Error("Backend error");
