@@ -7,17 +7,43 @@ import { HeaderComponent } from "../components/Header/Header";
 import { ROUTE_LABELS } from "../routes";
 import { useComponentSearch } from "../hooks/useComponentSearch";
 import { useCart } from "../hooks/useCart";
+import { Link } from "react-router-dom";
+
+
+import { fetchCartAsync } from "../slices/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "../store/store";
+
+import {
+  setSearchValue,
+  setTypeFilter,
+  setSelectedImage,
+  clearFilters,
+} from "../slices/ComponentsListSlice";
 
 export const ComponentsList: React.FC = () => {
-    const [components, setComponents] = useState<Component[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
+  const componentsRef = React.useRef<Component[]>([]);
 
-    const [searchValue, setSearchValue] = useState("");
-    const [typeFilter, setTypeFilter] = useState("");
-    const [filtered, setFiltered] = useState<Component[]>([]);
+  const [components, setComponents] = useState<Component[]>([]);
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  // 🔥 Redux filters
+  const searchValue = useSelector(
+    (state: RootState) => state.filters.searchValue
+  );
+
+  const typeFilter = useSelector(   
+    (state: RootState) => state.filters.typeFilter
+  );
+
+  const selectedImage = useSelector(
+    (state: RootState) => state.filters.selectedImage
+  );
+
+  const [appliedSearch, setAppliedSearch] = useState("");
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
     const {
         items,
@@ -27,38 +53,58 @@ export const ComponentsList: React.FC = () => {
         resetSearch
     } = useComponentSearch(components);
 
-    // 📦 LOAD DATA
+    // 📦 LOAD DATA удалил
     useEffect(() => {
         fetchComponents().then(data => {
             setComponents(data);
-            setFiltered(data);
         });
     }, []);
 
+    
+
     const handleSearch = () => {
-        const result = components.filter(c => {
+    setAppliedSearch(searchValue);
+    };
+
+    const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated
+    );
+
+    useEffect(() => {
+  if (!isAuthenticated) {
+    fetchComponents().then(data => {
+      setComponents(data);
+    });
+
+    dispatch(clearFilters());
+    setAppliedSearch("");
+  }
+}, [isAuthenticated]);
+
+
+
+    const displayItems = React.useMemo(() => {
+        if (!components) return [];
+
+        let result = [...components];
+
+        const search = appliedSearch.toLowerCase();
+
+        result = result.filter(c => {
             const title = c?.title ?? "";
             const type = c?.type ?? "";
 
             const matchText =
-                title.toLowerCase().includes(searchValue.toLowerCase()) ||
-                type.toLowerCase().includes(searchValue.toLowerCase());
+            title.toLowerCase().includes(search) ||
+            type.toLowerCase().includes(search);
 
             const matchType = typeFilter ? c.type === typeFilter : true;
 
             return matchText && matchType;
         });
 
-        setFiltered(result);
-    };
-
-
-    const displayItems = selectedImage
-    ? items
-        .filter(i => i.embedding && i.isVisible)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 4)
-    : filtered;
+        return result;
+        }, [components, appliedSearch, typeFilter]);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -66,12 +112,12 @@ export const ComponentsList: React.FC = () => {
         if (!file) return;
 
         const imageUrl = URL.createObjectURL(file);
-        setSelectedImage(imageUrl);
+        dispatch(setSelectedImage(imageUrl));
         searchByImage(file);
     };
 
     const handleClear = () => {
-        setSelectedImage(null);
+        dispatch(setSelectedImage(null));
         resetSearch();
 
         if (fileInputRef.current) {
@@ -79,8 +125,10 @@ export const ComponentsList: React.FC = () => {
         }
     };
 
-    const cart = useCart();
+    
+    const cart = useSelector((state: RootState) => state.cart);
 
+  dispatch(fetchCartAsync());
     return (
         <main>
             <HeaderComponent
@@ -94,7 +142,9 @@ export const ComponentsList: React.FC = () => {
                 <div className="inputField">
                     <input
                         value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={(e) =>
+                        dispatch(setSearchValue(e.target.value))
+                        }
                         placeholder="Поиск по названию"
                     />
 
@@ -129,15 +179,15 @@ export const ComponentsList: React.FC = () => {
 
                 
 
-               {cart?.componentsCount > 0 ? (
+               {cart?.componentsCount == 0 ? (
                     <a className="logo">
-                        <img src="/result-logo.png" className="mini-logo" />
+                        <img src="/no-result-logo.png" className="mini-logo" />
                     </a>
                 ) : (
                     <div style={{ position: "relative", display: "inline-block" }}>
-                    <a className="logo">
+                    <Link to={`/powers/${cart.draftId}`} className="logo">
                         <img src="/result-logo.png" className="mini-logo" />
-                    </a>
+                    </Link>
                      <span
                         style={{
                             position: "absolute",
@@ -150,7 +200,7 @@ export const ComponentsList: React.FC = () => {
                             padding: "2px 6px"
                         }}
                     >
-                        {0}
+                        {cart?.componentsCount ?? 0}
                     </span>
                     </div>
                 )}

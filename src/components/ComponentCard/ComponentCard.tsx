@@ -3,17 +3,57 @@ import { Card, Button } from "react-bootstrap";
 import type { Component } from "../../modules/types";
 import { Link } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "../../store/store";
+import axios from "axios";
+import { fetchCartAsync } from "../../slices/cartSlice";
+import { fetchPowerById } from "../../slices/powerSlice";
+import { useEffect } from "react";
+
+
 interface Props {
     component: Component;
-}
+}   
 
 export const ComponentCard: React.FC<Props> = ({ component }) => {
-    const imageSrc = component.image
-    ? component.image.startsWith("http")
-        ? component.image
-        : `${component.image}`
-    : "/logo.png";
+  const dispatch = useDispatch<AppDispatch>();
+  const cart = useSelector((state: RootState) => state.cart);
 
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated
+  );
+
+  const power = useSelector((state: RootState) => state.power.power);
+
+  const selected = power?.components.find(
+    (c) => c.id === component.id
+  );
+
+  const quantity = selected?.quantity ?? 0;
+
+  useEffect(() => {
+  if (!isAuthenticated) return;
+  if (!cart.draftId) return;
+
+  dispatch(fetchPowerById(cart.draftId));
+}, [isAuthenticated, cart.draftId]);
+
+  const handleAdd = async () => {
+  await axios.post(
+    `/api/components-powers/add/${component.id}`,
+    { componentId: component.id },
+    { withCredentials: true }
+  );
+
+  dispatch(fetchCartAsync());
+
+  // важно: всегда пробуем обновить power
+  if (cart.draftId) {
+    dispatch(fetchPowerById(cart.draftId));
+  }
+};
+
+const imageSrc = component.image ? component.image.startsWith("http") ? component.image : component.image : "/logo.png";
     return (
         <div className="component-item">
             <div className="component-title">
@@ -40,9 +80,18 @@ export const ComponentCard: React.FC<Props> = ({ component }) => {
                     <p className="component-info-text">
                         Базовое тепловыделение: {component.tdp_typical} Вт.
                     </p>
+                    {isAuthenticated ? (<>
+                        <div className="component-info-status">
+                    <p className="component-status">Выбрано: {quantity}</p>
+                    <Button onClick={handleAdd}>
+                        Добавить
+                    </Button></div></>
+                    
+                    ) : (
                     <p className="component-status">
                         Войдите в аккаунт чтобы выбрать
                     </p>
+                    )}
                 </div>
             </div>
         </div>

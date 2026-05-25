@@ -8,11 +8,15 @@ export const NavbarComponent: React.FC = () => {
   return (
     <Navbar className="custom-navbar" variant="dark">
       <Nav className="nav-inline">
-        
 
         <Nav.Link as={Link} to={ROUTES.COMPONENTS}>
           {ROUTE_LABELS.COMPONENTS}
         </Nav.Link>
+
+        <Nav.Link as={Link} to={ROUTES.POWERS}>
+          {ROUTE_LABELS.POWERS}
+        </Nav.Link>
+
       </Nav>
     </Navbar>
   );

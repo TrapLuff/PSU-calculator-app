@@ -295,3 +295,144 @@ hr {
   flex-direction: column;
   gap: 5px; /* расстояние между h1 и navbar */
 }
+
+.psu-table {
+     width: calc(100% - 60px);
+  border-collapse: collapse;
+  margin: 20px 30px;
+}
+
+.psu-table th,
+.psu-table td {
+  border: none;
+  padding: 8px;
+  text-align: left;
+}
+
+.psu-table tbody tr {
+  border-bottom: 1px solid #ddd; /* линия между строками */
+}
+
+.psu-table th {
+  border-bottom: 2px solid #aaa; /* линия под заголовком */
+}
+
+.psu-img {
+  width: 40px;
+  height: auto;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.psu-name-link {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls {
+    width: 30px;
+}
+
+.long-button {
+    width: 280px;
+}
+
+.power-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-top: 20px;
+}
+
+.settings-block {
+  width: 320px;
+}
+
+.summary-block {
+  width: 300px;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.description-textarea {
+  width: 280px;
+  min-height: 98px; 
+
+  resize: vertical;
+
+  padding: 10px;
+
+  font-size: 14px;
+  font-family: inherit;
+
+  background-color: black;
+    border-style: solid;
+    border-radius: 6px;
+    color: white;
+    box-shadow: none;
+    
+    outline: none;
+    margin: 10px 10px 0 0;
+}
+
+.top-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+
+  padding: 0 30px;
+  margin-top: 0px;
+}
+
+.power-layout .top-filters {
+  display: flex;
+  flex-wrap: nowrap; /* ключевое */
+  gap: 12px;
+  align-items: flex-end;
+  overflow-x: auto; /* чтобы не ломалось на маленьких экранах */
+}
+
+.top-filters input,
+.top-filters select {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.top-filters button {
+  margin: 0;
+}
+
+.psu-table td:last-child button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.psu-table tbody tr {
+  height: 56px; 
+}
+
+.top-filters select {
+      background-color: black;
+    border-style: solid;
+    height: 24px;
+    width: 200px;
+    border-radius: 6px;
+    color: white;
+    box-shadow: none;
+    
+    outline: none;
+    margin: 10px 10px 0 0;
+}
+
+    
+.powers-list .summary-block {
+  margin-top: 25px;
+}
