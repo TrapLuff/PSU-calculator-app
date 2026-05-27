@@ -81,13 +81,13 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ crumbs }) => {
         )}
       </div>
       <Link to="/components" className="logo">
-          <img src={import.meta.env.BASE_URL + "/logo.png"} className="header-logo" />
+          <img src={import.meta.env.BASE_URL + "logo.png"} className="header-logo" />
         </Link>
       </div>
         
       </div>
 
-      <img src={import.meta.env.BASE_URL + "/header-background.png"} className="header-background" />
+      <img src={import.meta.env.BASE_URL + "header-background.png"} className="header-background" />
 
       <h3>
         Добро пожаловать в калькулятор мощности блока питания.

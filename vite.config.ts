@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa';
-const base = "/PSU-calculator-app/";
+const base = "./";
 import mkcert from 'vite-plugin-mkcert'
 import fs from 'fs';
 import path from 'path';

@@ -36,7 +36,7 @@ export const App: React.FC = () => {
         }, []);
 
     return (
-        <Router basename="/PSU-calculator-app/">
+        <Router>
             <div className="container mt-3">
                 <Routes>
                     <Route path="/" element={<Navigate to="/components" replace />} />
