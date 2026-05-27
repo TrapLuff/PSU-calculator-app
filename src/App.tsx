@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 import { ComponentsList } from "./pages/ComponentsList";
 import { ComponentPage } from "./pages/ComponentPage";
-import { HomePage } from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { PowerPage } from "./pages/PowerPage";
@@ -36,10 +36,10 @@ export const App: React.FC = () => {
         }, []);
 
     return (
-        <Router>
+        <Router basename="/PSU-calculator-app/">
             <div className="container mt-3">
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/" element={<Navigate to="/components" replace />} />
                     <Route path="/components" element={<ComponentsList />} />
                     <Route path="/components/:id" element={<ComponentPage />} />
 
@@ -53,3 +53,4 @@ export const App: React.FC = () => {
         </Router>
     );
 };
+

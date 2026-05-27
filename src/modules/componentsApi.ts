@@ -1,6 +1,6 @@
 import type { Component } from "./types";
-
-const API_URL = "/api/components";
+const API_URL2 = import.meta.env.VITE_API_URL;
+const API_URL = `${API_URL2}/components`;
 
 const componentsMock: Component[] = [
   {

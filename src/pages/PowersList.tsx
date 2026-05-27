@@ -1,4 +1,4 @@
-  import React, { useEffect, useState } from "react";
+  import { useEffect, useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import type { AppDispatch, RootState } from "../store/store";
   import { fetchPowers } from "../slices/powerSlice";
@@ -20,7 +20,7 @@ const today = new Date().toISOString().split("T")[0];
     const [status, setStatus] = useState("");
     const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState(today);
-    const [creator, setCreator] = useState(""); // frontend filter
+    //const [creator, setCreator] = useState(""); // frontend filter
 
     const role = useSelector((state: RootState) => state.user.role);
 
@@ -139,6 +139,7 @@ const handleStatusChange = async (
       {loading ? (
         <p style={{ margin: "20px 30px" }}>Загрузка...</p>
       ) : (
+        <div className="table-wrapper">
         <table className="psu-table">
           <thead>
             <tr>
@@ -162,6 +163,7 @@ const handleStatusChange = async (
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </main>
   );

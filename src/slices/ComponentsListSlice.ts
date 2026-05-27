@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 interface FiltersState {
   searchValue: string;
   typeFilter: string;
+  appliedSearch: string;
   selectedImage: string | null;
 }
 
 const initialState: FiltersState = {
   searchValue: '',
   typeFilter: '',
+  appliedSearch: '',
   selectedImage: null,
 };
 
@@ -20,6 +22,10 @@ const filtersSlice = createSlice({
   reducers: {
     setSearchValue: (state, action) => {
       state.searchValue = action.payload;
+    },
+
+    setAppliedSearch: (state) => {
+      state.appliedSearch = state.searchValue;
     },
 
     setTypeFilter: (state, action) => {
@@ -41,6 +47,7 @@ const filtersSlice = createSlice({
 export const {
   setSearchValue,
   setTypeFilter,
+  setAppliedSearch, 
   setSelectedImage,
   clearFilters,
 } = filtersSlice.actions;

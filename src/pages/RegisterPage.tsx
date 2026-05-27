@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { HeaderComponent } from "../components/Header/Header";
 import { ROUTE_LABELS } from "../routes";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const RegisterPage = () => {
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ const RegisterPage = () => {
       setLoading(true);
 
       await axios.post(
-        'api/users/register',
+        `${API_URL}/users/register`,
         {
           login: formData.login,
           password: formData.password,

@@ -12,6 +12,9 @@ import { clearFilters } from "../../slices/ComponentsListSlice";
 import { clearCart } from "../../slices/cartSlice";
 import { clearPowers } from "../../slices/powerSlice";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 type HeaderProps = {
   crumbs: { label: string; path?: string }[];
@@ -33,7 +36,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ crumbs }) => {
  const handleLogout = async () => {
   //console.log("LOGOUT CLICKED");
 
-  await axios.post("/api/users/logout", {}, { withCredentials: true });
+  await axios.post(`${API_URL}/users/logout`, {}, { withCredentials: true });
 
   //console.log("LOGOUT RESPONSE DONE");
 
@@ -46,12 +49,14 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ crumbs }) => {
   return (
     <div className="header-content">
       <div className="header-up">
-        <h1>Калькулятор мощности БП</h1>
+        <div className="header-left">
+          <h1>Калькулятор мощности БП</h1>
+          <NavbarComponent />
+          <BreadCrumbs crumbs={crumbs} />
+        </div>
 
-        <NavbarComponent />
 
-        <BreadCrumbs crumbs={crumbs} />
-
+        <div className="header-right">
         <div className="auth-buttons">
         {!isAuthenticated ? (
           <button
@@ -75,13 +80,14 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ crumbs }) => {
           
         )}
       </div>
-
-        <a href="/components" className="logo">
-          <img src="/logo.png" className="header-logo" />
-        </a>
+      <Link to="/components" className="logo">
+          <img src={import.meta.env.BASE_URL + "/logo.png"} className="header-logo" />
+        </Link>
+      </div>
+        
       </div>
 
-      <img src="/header-background.png" className="header-background" />
+      <img src={import.meta.env.BASE_URL + "/header-background.png"} className="header-background" />
 
       <h3>
         Добро пожаловать в калькулятор мощности блока питания.

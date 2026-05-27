@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/PSU-calculator-app/dev-sw.js?dev-sw', { scope: '/PSU-calculator-app/', type: 'classic' })

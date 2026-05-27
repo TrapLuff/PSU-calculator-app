@@ -21,7 +21,7 @@ export const PowerPage: React.FC = () => {
   const navigate = useNavigate();
 
   const power = useSelector((state: RootState) => state.power.power);
-  const loading = useSelector((state: RootState) => state.power.loading);
+  //const loading = useSelector((state: RootState) => state.power.loading);
   const error = useSelector((state: RootState) => state.power.error);
 
   const [efficiency, setEfficiency] = useState(power?.efficiency ?? 85);
@@ -182,7 +182,7 @@ const [description, setDescription] = useState(power?.description ?? "");
   </button>
 </div>
 </div>
-
+<div className="table-wrapper">
       <table className="psu-table">
   <thead>
     <tr>
@@ -213,6 +213,7 @@ const [description, setDescription] = useState(power?.description ?? "");
     )}
   </tbody>
 </table>
+</div>
     </main>
   );
 };

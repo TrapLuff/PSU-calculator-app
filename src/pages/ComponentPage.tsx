@@ -18,24 +18,25 @@ export const ComponentPage: React.FC = () => {
 
     if (!component) return <div>Загрузка...</div>;
 
-    const imageSrc = component.image
-    ? component.image.startsWith("http")
-        ? component.image
-        : `${component.image}`
-    : "/logo.png";
+    const imageSrc =
+        component.image
+            ? component.image.startsWith("http")
+            ? component.image
+            : component.image
+    : import.meta.env.BASE_URL + "logo.png";
 
-    const videoSrc = component.video
-    ? component.video.startsWith("http")
-        ? component.video
-        : `${component.video}`
-    : "/video.mp4";
-
+    const videoSrc =
+        component.video
+            ? component.video.startsWith("http")
+            ? component.video
+            : component.video
+    : import.meta.env.BASE_URL + "video.mp4";   
     
     return (
         <div className="portrait-mode">
             {/* Видео фон */}
             {videoSrc && (
-                <video autoPlay muted loop className="background-video">
+                <video autoPlay muted loop playsInline className="background-video">
                     <source src={videoSrc} type="video/mp4" />
                 </video>
             )}

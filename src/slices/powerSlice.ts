@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface PowerComponent {
   id: number;
@@ -56,7 +57,7 @@ export const fetchPowerById = createAsyncThunk<
   "power/fetchById",
   async (powerId, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`/api/powers/${powerId}`, {
+      const res = await axios.get(`${API_URL}/powers/${powerId}`, {
         withCredentials: true,
       });
 
@@ -86,7 +87,7 @@ export const fetchPowers = createAsyncThunk<
     if (filters.dateTo) params.dateTo = filters.dateTo;
     if (filters.creatorId) params.creatorId = filters.creatorId;
 
-    const res = await axios.get(`/api/powers`, {
+    const res = await axios.get(`${API_URL}/powers`, {
       params,
       withCredentials: true,
     });
@@ -105,7 +106,7 @@ export const deleteComponentFromPower = createAsyncThunk<
   "power/deleteComponent",
   async (componentId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/api/components-powers/${componentId}`, {
+      await axios.delete(`${API_URL}/components-powers/${componentId}`, {
         withCredentials: true,
       });
 
@@ -125,7 +126,7 @@ export const updatePower = createAsyncThunk<
   async ({ powerId, efficiency, description }, { rejectWithValue }) => {
     try {
       const res = await axios.put(
-        `/api/powers/${powerId}`,
+        `${API_URL}/powers/${powerId}`,
         { efficiency, description },
         { withCredentials: true }
       );
@@ -146,7 +147,7 @@ export const updateComponentQuantity = createAsyncThunk<
   async ({ componentId, quantity }, { rejectWithValue }) => {
     try {
       const res = await axios.put(
-        `/api/components-powers/${componentId}`,
+        `${API_URL}/components-powers/${componentId}`,
         { quantity },
         { withCredentials: true }
       );
@@ -170,7 +171,7 @@ export const addComponent = createAsyncThunk<
   async ({ componentId, quantity }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `/api/components-powers/${componentId}`,
+        `${API_URL}/components-powers/${componentId}`,
         { withCredentials: true }
       );
 
@@ -195,7 +196,7 @@ export const formPower = createAsyncThunk<
   async (powerId, { rejectWithValue }) => {
     try {
       await axios.put(
-        `/api/powers/${powerId}/form`,
+        `${API_URL}/powers/${powerId}/form`,
         {},
         { withCredentials: true }
       );
@@ -214,7 +215,7 @@ export const deletePower = createAsyncThunk<
   async (powerId, { rejectWithValue }) => {
     try {
       await axios.delete(
-        `/api/powers/${powerId}`,
+        `${API_URL}/powers/${powerId}`,
         { withCredentials: true }
       );
     } catch (err: any) {
@@ -307,10 +308,10 @@ const powerSlice = createSlice({
         state.power.componentsCount -= 1;
       }
     })
-      .addCase(deleteComponentFromPower.rejected, (state, action) => {
-        state.loading = false;
-        state.error = "ERROR";
-      });
+      //.addCase(deleteComponentFromPower.rejected, (state, action) => {
+      //  state.loading = false;
+      //  state.error = "ERROR";
+      //});
   },
 });
 
@@ -328,7 +329,7 @@ export const updatePowerStatus = createAsyncThunk(
   ) => {
     try {
       const response = await axios.put(
-        `/api/powers/${powerId}/status`,
+        `${API_URL}/powers/${powerId}/status`,
         { status },
         {
           withCredentials: true,

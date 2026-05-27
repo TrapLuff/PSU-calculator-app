@@ -11,6 +11,8 @@ import { fetchCartAsync } from '../slices/cartSlice';
 
 import { HeaderComponent } from "../components/Header/Header";
 import { ROUTE_LABELS } from "../routes";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +38,8 @@ const LoginPage = () => {
     
   };
 
+  
+
   const handleSubmit = async (
     e: React.FormEvent
   ) => {
@@ -52,7 +56,7 @@ const LoginPage = () => {
       setLoading(true);
 
       const response = await axios.post(
-        '/api/users/auth',
+        `${API_URL}/users/auth`,
         {
           login: formData.login,
           password: formData.password,

@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { HeaderComponent } from "../components/Header/Header";
 import { ROUTE_LABELS } from "../routes";
 import { useComponentSearch } from "../hooks/useComponentSearch";
-import { useCart } from "../hooks/useCart";
+//import { useCart } from "../hooks/useCart";
 import { Link } from "react-router-dom";
 
 
@@ -16,19 +16,22 @@ import type { RootState, AppDispatch } from "../store/store";
 
 import {
   setSearchValue,
-  setTypeFilter,
+  //setTypeFilter,
   setSelectedImage,
   clearFilters,
+  setAppliedSearch  
 } from "../slices/ComponentsListSlice";
 
 export const ComponentsList: React.FC = () => {
+
+    console.log(import.meta.env.VITE_API_URL);
   const dispatch = useDispatch<AppDispatch>();
 
-  const componentsRef = React.useRef<Component[]>([]);
+  //const componentsRef = React.useRef<Component[]>([]);
 
   const [components, setComponents] = useState<Component[]>([]);
 
-  // 🔥 Redux filters
+  //  Redux filters
   const searchValue = useSelector(
     (state: RootState) => state.filters.searchValue
   );
@@ -41,19 +44,21 @@ export const ComponentsList: React.FC = () => {
     (state: RootState) => state.filters.selectedImage
   );
 
-  const [appliedSearch, setAppliedSearch] = useState("");
+  const appliedSearch = useSelector(
+  (state: RootState) => state.filters.appliedSearch
+);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
     const {
-        items,
+        //items,
         ready,
-        progress,
+        //progress,
         searchByImage,
         resetSearch
     } = useComponentSearch(components);
 
-    // 📦 LOAD DATA удалил
+    //  LOAD DATA удалил
     useEffect(() => {
         fetchComponents().then(data => {
             setComponents(data);
@@ -63,8 +68,8 @@ export const ComponentsList: React.FC = () => {
     
 
     const handleSearch = () => {
-    setAppliedSearch(searchValue);
-    };
+  dispatch(setAppliedSearch());
+};
 
     const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
@@ -77,34 +82,35 @@ export const ComponentsList: React.FC = () => {
     });
 
     dispatch(clearFilters());
-    setAppliedSearch("");
   }
 }, [isAuthenticated]);
 
 
 
-    const displayItems = React.useMemo(() => {
-        if (!components) return [];
+   const displayItems = React.useMemo(() => {
+  if (!components) return [];
 
-        let result = [...components];
+  let result = [...components];
 
-        const search = appliedSearch.toLowerCase();
+  const search = appliedSearch.toLowerCase().trim();
 
-        result = result.filter(c => {
-            const title = c?.title ?? "";
-            const type = c?.type ?? "";
+result = result.filter(c => {
+  const title = c?.title ?? "";
+  const type = c?.type ?? "";
 
-            const matchText =
-            title.toLowerCase().includes(search) ||
-            type.toLowerCase().includes(search);
+  const matchText =
+    search.length === 0
+      ? true
+      : title.toLowerCase().includes(search) ||
+        type.toLowerCase().includes(search);
 
-            const matchType = typeFilter ? c.type === typeFilter : true;
+  const matchType = typeFilter ? c.type === typeFilter : true;
 
-            return matchText && matchType;
-        });
+  return matchText && matchType;
+});
 
-        return result;
-        }, [components, appliedSearch, typeFilter]);
+  return result;
+}, [components, appliedSearch, typeFilter]);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -128,7 +134,10 @@ export const ComponentsList: React.FC = () => {
     
     const cart = useSelector((state: RootState) => state.cart);
 
+  useEffect(() => {
   dispatch(fetchCartAsync());
+}, [dispatch]);
+
     return (
         <main>
             <HeaderComponent
@@ -181,12 +190,12 @@ export const ComponentsList: React.FC = () => {
 
                {cart?.componentsCount == 0 ? (
                     <a className="logo">
-                        <img src="/no-result-logo.png" className="mini-logo" />
+                        <img src={import.meta.env.BASE_URL + "/no-result-logo.png"} className="mini-logo" />
                     </a>
                 ) : (
                     <div style={{ position: "relative", display: "inline-block" }}>
                     <Link to={`/powers/${cart.draftId}`} className="logo">
-                        <img src="/result-logo.png" className="mini-logo" />
+                        <img src={import.meta.env.BASE_URL + "/result-logo.png"} className="mini-logo" />
                     </Link>
                      <span
                         style={{
@@ -229,7 +238,7 @@ export const ComponentsList: React.FC = () => {
 
                             {selectedImage && (
                                 <div style={{ fontSize: 12, color: "#666" }}>
-                                    Similarity: {(c.score * 100).toFixed(1)}%
+                                    Similarity: {(/*c.score * */100).toFixed(1)}%
                                 </div>
                             )}
                         </div>

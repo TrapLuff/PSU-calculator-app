@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../store/store";
-import { deleteComponentFromPower, fetchPowerById, updateComponentQuantity } from "../../slices/powerSlice";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../store/store";
+import { deleteComponentFromPower, updateComponentQuantity } from "../../slices/powerSlice";
 
 interface Props {
   component: {
@@ -20,9 +20,11 @@ export const ComponentCardTable: React.FC<Props> = ({ component }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const imageSrc =
-    component.image?.startsWith("http")
+  component.image
+    ? component.image.startsWith("http")
       ? component.image
-      : "/logo.png";
+      : component.image
+    : import.meta.env.BASE_URL + "logo.png";
 
   const handleDelete = () => {
     dispatch(deleteComponentFromPower(component.id));

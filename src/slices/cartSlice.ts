@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 items: Array<{
@@ -8,11 +9,11 @@ items: Array<{
   quantity: number;
 }>
 
-interface CartItem {
-  componentId: number;
-  powerId: number;
-  quantity: number;
-}
+//interface CartItem {
+//  componentId: number;
+//  powerId: number;
+//  quantity: number;
+//}
 
 interface CartState {
   draftId: number | null;
@@ -27,7 +28,7 @@ const initialState: CartState = {
 export const fetchCartAsync = createAsyncThunk(
   "cart/fetchCart",
   async () => {
-    const res = await axios.get("/api/powers/cart", {
+    const res = await axios.get(`${API_URL}/powers/cart`, {
       withCredentials: true,
     });
 

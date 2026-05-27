@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store/store";
-import { updatePowerStatus } from "../../slices/powerSlice";
+//import { useDispatch } from "react-redux";
+//import type { AppDispatch } from "../../store/store";
+//import { updatePowerStatus } from "../../slices/powerSlice";
 import { Link } from "react-router-dom";
 
 interface Props {

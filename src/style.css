@@ -33,12 +33,32 @@ h3{
 }
 
 .header-up {
-    display: flex;
-    align-items: center;        /* выравнивание по вертикали */
-    justify-content: space-between; /* разносит по краям */
-    
-    margin: 0;             /* центр */
-    padding: 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+
+  justify-content: flex-start; /* ❗ ключ */
+}
+
+/* левая часть: заголовок + навигация */
+.header-left {
+    margin-right: auto;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 20px;
+}
+
+
+
+
+/* правая часть: auth + логотип */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
 }
 
 .inputField {
@@ -212,7 +232,7 @@ hr {
 .background-video {
     position: fixed;
     inset: 0;
-    width: 100wh;
+    width: 600px;
     height: 100vh;
     object-fit: cover;
     z-index: -1;
@@ -224,7 +244,7 @@ hr {
     background-image: none;
     position: relative;
     min-height: 100vh;
-    width: 56vh;
+     
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -435,4 +455,211 @@ hr {
     
 .powers-list .summary-block {
   margin-top: 25px;
+}
+
+
+@media (max-width: 1024px) {
+  .components-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .body-up {
+     display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .inputField {
+    flex-wrap: wrap;
+  }
+}
+.inputField2 {
+    display: flex;
+    align-items: flex-center;
+  }
+  .inputField {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 600px) {
+
+.inputField button {
+
+    /* max-width: 110px;   или 100% если хочешь full width */
+  }
+    .inputField {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+  
+  .components-container {
+    grid-template-columns: 1fr;
+  }
+
+  .body-up {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin: 0 10px;
+  }
+
+  
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    max-width: 120px;
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .component-item {
+    padding: 12px;
+  }
+
+  .component-other {
+    flex-direction: column;
+  }
+
+  .mini-logo {
+    height: 40px;
+  }
+}
+
+.header-left h1 {
+  margin: 0 20px 0 0px;
+}
+
+@media (max-width: 600px) {
+  .header-up {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 100%;  
+      gap: 12px;
+     box-sizing: border-box;
+     padding: 0 20px 0 20px ;
+
+  }
+
+  .navbar {
+  width: auto !important;
+  flex: 0 0 auto;
+}
+
+.header-right {
+  flex-direction: row !important;
+  width: 100%;
+  justify-content: flex-end;
+  
+}
+
+.logo {
+    max-width: 40px;
+    overflow: hidden;
+  }
+
+  .header-logo {
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+  flex-shrink: 0;
+  }
+
+   .header-left {
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .auth-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+   .logo {
+    flex-shrink: 0;
+  }
+
+
+  .header-logo {
+    height: 40px;
+
+  }
+
+  .breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.header-left h1 {
+    font-size: 29px;
+    line-height: 1.2;
+    margin-right: 0;
+  }
+.header-content {
+  width: 100%;
+  overflow-x: hidden;
+}
+  
+}
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+.header-content {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+    .component-other {
+    flex-direction: column;
+    width: 100%;
+  }
+  .component-info-status {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+  }
+  .component-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  flex: 1;
+  min-width: 100%;
+}
+.component-logo {
+width: 100%;
+height: 100%;
+}
+.component-img {
+width: 100%;
+height: 100%;
+}
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
